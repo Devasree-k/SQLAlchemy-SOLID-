@@ -4,6 +4,7 @@ from sqlalchemy import Date, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.base import Base
+from app.models.transport_collection_model import TransportCollection
 
 
 class Driver(Base):
