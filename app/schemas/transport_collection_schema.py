@@ -14,8 +14,17 @@ class CollectionFields(BaseModel):
     fuel_expense: Decimal = Field(ge=0)
     other_expense: Decimal = Field(ge=0)
 
-class CollectionCreate(CollectionFields):
-    pass
+class CollectionCreate(BaseModel):
+    driver_id: int = Field(gt=0)
+    vehicle_number: str = Field(min_length=1, max_length=20)
+    collection_date: date
+    morning_trips: int = Field(ge=0)
+    evening_trips: int = Field(ge=0)
+    morning_collection: Decimal = Field(ge=0)
+    evening_collection: Decimal = Field(ge=0)
+    fuel_expense: Decimal = Field(ge=0)
+    other_expense: Decimal = Field(ge=0)
+
 
 class CollectionUpdate(BaseModel):
     driver_id: int | None = Field(default=None, gt=0)

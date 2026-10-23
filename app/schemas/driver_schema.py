@@ -17,7 +17,6 @@ class DriverUpdate(BaseModel):
     license_number: str = Field(min_length=1, max_length=16)
 
 class DriverPatch(BaseModel):
-    """PATCH: only supplied fields are changed."""
     name: str | None = Field(default=None, min_length=1, max_length=100)
     phone: str | None = Field(default=None, max_length=20)
     dob: date | None = None
