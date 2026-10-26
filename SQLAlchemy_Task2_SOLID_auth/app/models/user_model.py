@@ -10,24 +10,40 @@ class User(Base):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(
-        Integer, primary_key=True, index=True
+        Integer,
+        primary_key=True,
+        index=True,
+    )
+    username: Mapped[str] = mapped_column(
+        String(50),
+        unique=True,
+        index=True,
+        nullable=False,
     )
     email: Mapped[str] = mapped_column(
-        String(255), unique=True, index=True, nullable=False
+        String(255),
+        unique=True,
+        index=True,
+        nullable=False,
     )
     hashed_password: Mapped[str] = mapped_column(
-        String(255), nullable=False
+        String(255),
+        nullable=False,
     )
     role: Mapped[str] = mapped_column(
-        String(20), default="staff", nullable=False
+        String(20),
+        nullable=False,
+        default="collector",
+        server_default="collector",
     )
     is_active: Mapped[bool] = mapped_column(
-        Boolean, default=True, nullable=False
+        Boolean,
+        nullable=False,
+        default=True,
+        server_default="true",
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
         nullable=False,
     )
-
-    
