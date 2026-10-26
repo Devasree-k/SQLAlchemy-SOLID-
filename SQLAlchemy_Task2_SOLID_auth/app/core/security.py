@@ -17,12 +17,6 @@ from app.config.settings import (
 
 password_hash = PasswordHash.recommended()
 
-# Used to reduce timing differences for unknown usernames.
-DUMMY_PASSWORD_HASH = password_hash.hash(
-    "DummyPasswordForTimingOnly@123"
-)
-
-
 def hash_password(password: str) -> str:
     return password_hash.hash(password)
 

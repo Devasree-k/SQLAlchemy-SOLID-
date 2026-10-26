@@ -3,10 +3,10 @@ from datetime import date
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.dependencies.database import get_database
+from app.api.dependencies.database import get_database
 from app.services.driver_service import DriverService
 
-from app.dependencies.service_dependencies import get_driver_service
+from app.api.dependencies.service_dependencies import get_driver_service
 
 router = APIRouter(
     prefix="/api/reports",

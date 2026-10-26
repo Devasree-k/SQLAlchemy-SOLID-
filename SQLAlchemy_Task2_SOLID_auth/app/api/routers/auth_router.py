@@ -13,9 +13,9 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import decode_token
-from app.dependencies.auth_dependencies import get_current_user
-from app.dependencies.database import get_database
-from app.dependencies.service_dependencies import get_auth_service
+from app.api.dependencies.auth_dependencies import get_current_user
+from app.api.dependencies.database import get_database
+from app.api.dependencies.service_dependencies import get_auth_service
 from app.models.user_model import User
 from app.schemas.auth_schema import (
     LogoutRequest,

@@ -43,3 +43,4 @@ class RefreshTokenRepository(RefreshTokenRepositoryInterface):
     ) -> None:
         refresh_token.revoked = True
         await self.db.flush()
+        

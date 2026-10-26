@@ -1,7 +1,7 @@
 
 from fastapi import APIRouter, Depends, status
 
-from app.dependencies.database import get_database
+from app.api.dependencies.database import get_database
 from app.schemas.transport_collection_schema import (
     CollectionCreate,
     CollectionUpdate,
@@ -10,7 +10,9 @@ from app.schemas.transport_collection_schema import (
 from app.services.transport_collection_service import (
     TransportCollectionService,
 )
-from app.dependencies.service_dependencies import get_collection_service
+from app.api.dependencies.service_dependencies import get_collection_service
+
+from app.api.dependencies.auth_dependencies import require_permissions
 
 
 router = APIRouter(
@@ -23,6 +25,7 @@ router = APIRouter(
     "/",
     response_model=CollectionResponse,
     status_code=status.HTTP_201_CREATED,
+    dependencies=[Depends(require_permissions("collection:create"))],
 )
 async def add_collection(
     data: CollectionCreate,
@@ -36,6 +39,8 @@ async def add_collection(
 @router.get(
     "/",
     response_model=list[CollectionResponse],
+    dependencies=[Depends(require_permissions("collection:read"))],
+
 )
 async def list_collections(
     service: TransportCollectionService = Depends(
@@ -48,6 +53,7 @@ async def list_collections(
 @router.get(
     "/{collection_id}",
     response_model=CollectionResponse,
+    dependencies=[Depends(require_permissions("collection:read"))],
 )
 async def read_collection(
     collection_id: int,
@@ -61,6 +67,8 @@ async def read_collection(
 @router.patch(
     "/{collection_id}",
     response_model=CollectionResponse,
+    dependencies=[Depends(require_permissions("collection:update"))],
+
 )
 async def edit_collection(
     collection_id: int,
@@ -75,7 +83,9 @@ async def edit_collection(
     )
 
 
-@router.delete("/{collection_id}")
+@router.delete("/{collection_id}",
+                dependencies=[Depends(require_permissions("collection:delete"))],
+)
 async def remove_collection(
     collection_id: int,
     service: TransportCollectionService = Depends(

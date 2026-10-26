@@ -1,7 +1,7 @@
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.dependencies.database import get_database
+from app.api.dependencies.database import get_database
 from app.repositories.implementations.driver_repository import DriverRepository
 from app.repositories.implementations.transport_collection_repository import (
     TransportCollectionRepository,

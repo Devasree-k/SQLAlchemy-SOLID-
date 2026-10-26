@@ -27,7 +27,7 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 
-Role = Literal["admin", "supervisor", "collector"]
+Role = Literal["admin", "collector"]
 
 
 class RegisterRequest(BaseModel):

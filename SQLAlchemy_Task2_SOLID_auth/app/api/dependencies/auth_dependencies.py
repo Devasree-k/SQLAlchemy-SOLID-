@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import decode_token
-from app.dependencies.database import get_database
+from app.api.dependencies.database import get_database
 from app.models.user_model import User
 from app.repositories.implementations.user_repository import UserRepository
 
@@ -59,19 +59,21 @@ def require_roles(*allowed_roles: str):
 
 ROLE_PERMISSIONS: dict[str, set[str]] = {
     "admin": {
-        "driver:read", "driver:create", "driver:update", "driver:delete",
-        "collection:read", "collection:create",
-        "collection:update", "collection:delete",
-        "report:read", "user:manage",
-    },
-    "supervisor": {
-        "driver:read", "driver:create", "driver:update",
-        "collection:read", "collection:create", "collection:update",
-        "report:read",
+        "driver:read", 
+        "driver:create", 
+        "driver:update", 
+        "driver:delete",
+        "collection:read", 
+        "collection:create",
+        "collection:update", 
+        "collection:delete",
+        "report:read", 
+        "user:manage",
     },
     "collector": {
         "driver:read",
-        "collection:read", "collection:create",
+        "collection:read", 
+        "collection:create",
     },
 }
 

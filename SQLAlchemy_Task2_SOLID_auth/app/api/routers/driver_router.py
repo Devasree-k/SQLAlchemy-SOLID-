@@ -8,10 +8,10 @@ from app.schemas.driver_schema import (
 )
 from app.services.driver_service import DriverService
 
-from app.dependencies.service_dependencies import get_driver_service
+from app.api.dependencies.service_dependencies import get_driver_service
 
 
-from app.dependencies.auth_dependencies import require_permissions
+from app.api.dependencies.auth_dependencies import require_permissions
 
 router = APIRouter( 
     prefix="/api/drivers",
@@ -23,24 +23,26 @@ router = APIRouter(
     "/",
     response_model=DriverResponse,
     status_code=status.HTTP_201_CREATED,
+    dependencies=[
+            Depends(require_permissions("driver:create"))
+        ],
 )
 async def add_driver(
     data: DriverCreate,
     service: DriverService = Depends(get_driver_service),
-    dependencies=[
-        Depends(require_permissions("driver:create"))
-    ],
-):
+)->DriverResponse:
     return await service.create_driver(data)
 
 
-@router.get("/", response_model=list[DriverResponse])
+@router.get("/", 
+            response_model=list[DriverResponse],
+            dependencies=[
+                Depends(require_permissions("driver:read"))
+            ],
+            )
 async def list_drivers(
     service: DriverService = Depends(get_driver_service),
-    dependencies=[
-        Depends(require_permissions("driver:read"))
-    ],
-):
+)->list[DriverResponse]:
     return await service.get_drivers()
 
 
