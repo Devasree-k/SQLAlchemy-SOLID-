@@ -14,7 +14,6 @@ from app.config.settings import DATABASE_URL
 from app.models.driver_model import Driver
 from app.models.transport_collection_model import TransportCollection
 from app.models.user_model import User
-from app.models.refresh_token_model import RefreshToken
 
 
 # this is the Alembic Config object, which provides
