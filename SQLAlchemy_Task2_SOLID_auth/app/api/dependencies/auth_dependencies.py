@@ -57,42 +57,42 @@ def require_roles(*allowed_roles: str):
     return role_checker
 
 
-ROLE_PERMISSIONS: dict[str, set[str]] = {
-    "admin": {
-        "driver:read", 
-        "driver:create", 
-        "driver:update", 
-        "driver:delete",
-        "collection:read", 
-        "collection:create",
-        "collection:update", 
-        "collection:delete",
-        "report:read", 
-        "user:manage",
-    },
-    "collector": {
-        "driver:read",
-        "collection:read", 
-        "collection:create",
-    },
-}
+# ROLE_PERMISSIONS: dict[str, set[str]] = {
+#     "admin": {
+#         "driver:read", 
+#         "driver:create", 
+#         "driver:update", 
+#         "driver:delete",
+#         "collection:read", 
+#         "collection:create",
+#         "collection:update", 
+#         "collection:delete",
+#         "report:read", 
+#         "user:manage",
+#     },
+#     "driver": {
+#         "driver:read",
+#         "collection:read", 
+#         "collection:create",
+#     },
+# }
 
 
-def require_permissions(*required_permissions: str):
-    async def permission_checker(
-        current_user: User = Depends(get_current_user),
-    ) -> User:
-        user_permissions = ROLE_PERMISSIONS.get(
-            current_user.role,
-            set(),
-        )
+# def require_permissions(*required_permissions: str):
+#     async def permission_checker(
+#         current_user: User = Depends(get_current_user),
+#     ) -> User:
+#         user_permissions = ROLE_PERMISSIONS.get(
+#             current_user.role,
+#             set(),
+#         )
 
-        if not set(required_permissions).issubset(user_permissions):
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Insufficient permissions.",
-            )
+#         if not set(required_permissions).issubset(user_permissions):
+#             raise HTTPException(
+#                 status_code=status.HTTP_403_FORBIDDEN,
+#                 detail="Insufficient permissions.",
+#             )
 
-        return current_user
+#         return current_user
 
-    return permission_checker
+#     return permission_checker

@@ -33,7 +33,7 @@ def get_collection_service(
     return TransportCollectionService(db, repository)
 
 
-
+# Dependency function for authentication services
 def get_auth_service(
     db: AsyncSession = Depends(get_database),
 ) -> AuthService:

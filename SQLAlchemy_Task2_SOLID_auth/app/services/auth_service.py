@@ -20,14 +20,7 @@ from app.repositories.interfaces.refresh_token_repository_interface import (
     RefreshTokenRepositoryInterface,
 )
 from app.schemas.auth_schema import RegisterRequest
-
-
-class AuthenticationError(Exception):
-    pass
-
-
-class RegistrationConflict(Exception):
-    pass
+from app.exceptions.custom_exceptions import RegistrationConflict,AuthenticationError
 
 
 class AuthService:
@@ -58,7 +51,7 @@ class AuthService:
             username=data.username,
             email=email,
             hashed_password=hash_password(data.password),
-            role="collector",
+            role="driver",
             is_active=True,
         )
 

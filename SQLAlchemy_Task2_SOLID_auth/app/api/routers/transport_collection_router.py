@@ -12,7 +12,7 @@ from app.services.transport_collection_service import (
 )
 from app.api.dependencies.service_dependencies import get_collection_service
 
-from app.api.dependencies.auth_dependencies import require_permissions
+from app.api.dependencies.auth_dependencies import require_roles
 
 
 router = APIRouter(
@@ -25,7 +25,7 @@ router = APIRouter(
     "/",
     response_model=CollectionResponse,
     status_code=status.HTTP_201_CREATED,
-    dependencies=[Depends(require_permissions("collection:create"))],
+    dependencies=[Depends(require_roles("admin","driver"))],
 )
 async def add_collection(
     data: CollectionCreate,
@@ -39,7 +39,7 @@ async def add_collection(
 @router.get(
     "/",
     response_model=list[CollectionResponse],
-    dependencies=[Depends(require_permissions("collection:read"))],
+    dependencies=[Depends(require_roles("admin","driver"))],
 
 )
 async def list_collections(
@@ -53,7 +53,7 @@ async def list_collections(
 @router.get(
     "/{collection_id}",
     response_model=CollectionResponse,
-    dependencies=[Depends(require_permissions("collection:read"))],
+    dependencies=[Depends(require_roles("admin","driver"))],
 )
 async def read_collection(
     collection_id: int,
@@ -67,7 +67,7 @@ async def read_collection(
 @router.patch(
     "/{collection_id}",
     response_model=CollectionResponse,
-    dependencies=[Depends(require_permissions("collection:update"))],
+    dependencies=[Depends(require_roles("admin","driver"))],
 
 )
 async def edit_collection(
@@ -84,7 +84,7 @@ async def edit_collection(
 
 
 @router.delete("/{collection_id}",
-                dependencies=[Depends(require_permissions("collection:delete"))],
+                dependencies=[Depends(require_roles("driver"))],
 )
 async def remove_collection(
     collection_id: int,

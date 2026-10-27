@@ -11,7 +11,7 @@ from app.services.driver_service import DriverService
 from app.api.dependencies.service_dependencies import get_driver_service
 
 
-from app.api.dependencies.auth_dependencies import require_permissions
+from app.api.dependencies.auth_dependencies import require_roles
 
 router = APIRouter( 
     prefix="/api/drivers",
@@ -24,7 +24,7 @@ router = APIRouter(
     response_model=DriverResponse,
     status_code=status.HTTP_201_CREATED,
     dependencies=[
-            Depends(require_permissions("driver:create"))
+            Depends(require_roles("admin"))
         ],
 )
 async def add_driver(
@@ -37,7 +37,7 @@ async def add_driver(
 @router.get("/", 
             response_model=list[DriverResponse],
             dependencies=[
-                Depends(require_permissions("driver:read"))
+                Depends(require_roles("admin","driver"))
             ],
             )
 async def list_drivers(
@@ -50,7 +50,7 @@ async def list_drivers(
 @router.get(
     "/{driver_id}/collections",
     response_model=DriverWithCollectionsResponse,
-    dependencies=[Depends(require_permissions("driver:read"))]
+    dependencies=[Depends(require_roles("admin","driver"))]
 )
 async def read_driver_with_collections(
     driver_id: int,
@@ -63,7 +63,7 @@ async def read_driver_with_collections(
 @router.get(
     "/{driver_id}",
     response_model=DriverResponse,
-    dependencies=[Depends(require_permissions("driver:read"))]
+    dependencies=[Depends(require_roles("admin","driver"))]
 )
 async def read_driver(
     driver_id: int,
@@ -75,7 +75,7 @@ async def read_driver(
 #must specify all the fields
 @router.put("/{driver_id}", 
             response_model=DriverResponse,
-            dependencies=[Depends(require_permissions("driver:update"))]
+            dependencies=[Depends(require_roles("admin"))]
             )
 async def replace_driver(
     driver_id: int,
@@ -89,7 +89,7 @@ async def replace_driver(
 # Can update only the required fields
 @router.patch("/{driver_id}", 
         response_model=DriverResponse, 
-        dependencies=[Depends(require_permissions("driver:update"))]
+        dependencies=[Depends(require_roles("admin"))]
         )
 async def patch_driver(
     driver_id: int,
@@ -104,7 +104,7 @@ async def patch_driver(
 
 @router.delete(
     "/{driver_id}",
-    dependencies=[Depends(require_permissions("driver:delete"))]
+    dependencies=[Depends(require_roles("admin"))]
     
 )
 async def remove_driver(

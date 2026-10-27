@@ -13,17 +13,6 @@ DATABASE_URL = URL.create(
     database=os.getenv("DB_NAME"),
 )
 
-# import os
-# from datetime import timedelta
-
-# JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
-# JWT_ALGORITHM = "HS256"
-# ACCESS_TOKEN_EXPIRE_MINUTES = 30
-
-# if not JWT_SECRET_KEY:
-#     raise RuntimeError("JWT_SECRET_KEY is not configured")
-
-
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
 if not JWT_SECRET_KEY:
@@ -36,13 +25,3 @@ ACCESS_TOKEN_EXPIRE_MINUTES = int(
 REFRESH_TOKEN_EXPIRE_DAYS = int(
     os.getenv("REFRESH_TOKEN_EXPIRE_DAYS", "7")
 )
-
-CORS_ORIGINS = [
-    origin.strip()
-    for origin in os.getenv(
-        "CORS_ORIGINS",
-        "http://localhost:5173",
-    ).split(",")
-    if origin.strip()
-]
-
