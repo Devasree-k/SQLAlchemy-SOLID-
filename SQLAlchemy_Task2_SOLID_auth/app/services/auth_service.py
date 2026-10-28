@@ -11,14 +11,7 @@ from app.repositories.interfaces.user_repository_interface import (
     UserRepositoryInterface,
 )
 from app.schemas.auth_schema import RegisterRequest
-
-
-class AuthenticationError(Exception):
-    pass
-
-
-class RegistrationConflict(Exception):
-    pass
+from app.exceptions.custom_exception import RegistrationConflict, AuthenticationError
 
 
 class AuthService:

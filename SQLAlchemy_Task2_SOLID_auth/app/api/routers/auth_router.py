@@ -19,11 +19,10 @@ from app.schemas.auth_schema import (
     TokenResponse,
     UserResponse,
 )
-from app.services.auth_service import (
-    AuthService,
-    AuthenticationError,
-    RegistrationConflict,
-)
+from app.services.auth_service import AuthService
+
+from app.exceptions.custom_exception import AuthenticationError, RegistrationConflict
+
 
 
 router = APIRouter(
